@@ -2,7 +2,7 @@
 title: "「SF-PLF」18 UseAuto"
 subtitle: "Programming Language Foundations - Theory And Practice Of Automation In Coq Proofs"
 layout: post
-author: "Hux"
+author: "Kai"
 header-style: text
 hidden: true
 tags:

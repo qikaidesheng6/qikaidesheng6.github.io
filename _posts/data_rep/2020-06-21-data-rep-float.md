@@ -2,7 +2,7 @@
 title: "Data Representation - Floating Point Numbers"
 subtitle: "「数据表示」浮点数"
 layout: post
-author: "Hux"
+author: "Kai"
 header-style: text
 hidden: true
 tags:

@@ -2,7 +2,7 @@
 title: "「SF-PLF」5 Smallstep"
 subtitle: "Programming Language Foundations - Small-Step Operational Semantics"
 layout: post
-author: "Hux"
+author: "Kai"
 header-style: text
 hidden: true
 tags:
