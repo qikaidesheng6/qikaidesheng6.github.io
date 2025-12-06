@@ -1,14 +1,14 @@
 {
-    "name": "Kai-blog",
+    "name": "kai-blog",
     "title": "Kai Blog",
-    "author": "Kai <Kaipro@gmail.com>",
+    "author": "Kai <qikaidesheng66@qq.com>",
     "version": "1.8.2",
-    "homepage": "http://Kaipro.github.io",
+    "homepage": "http://.github.io",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Kaipro/Kaipro.github.io"
+        "url": "https://github.com/qikaidesheng6/qikaidesheng6.github.io"
     },
-    "bugs": "https://github.com/Kaipro/Kaipro.github.io/issues",
+    "bugs": "https://github.com/qikaidesheng6.github.io",
     "devDependencies": {
         "grunt": ">=1.3.0",
         "grunt-banner": "~0.2.3",
