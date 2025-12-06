@@ -35,7 +35,7 @@ $ git clone git@github.com:Kaipro/Kaiblog-boilerplate.git
 
 * 当你fork了我的仓库之后，还要删掉里面的关于我的文档是不是感到略烦躁呢？**Boilerplate** 模板将帮助你快速开始，方便合并与更新。
 * `-apple-system`被添加到了字体规则里面了，这套字体格式能将iOS9默认的新字体**San Francisco**表现的非常漂亮。
-* 解决了代码过长自动换行的bug,替换为横向滚动条。详情请见[issue#15](https://github.com/Kaipro/Kaipro.github.io/issues/15)
+* 解决了代码过长自动换行的bug,替换为横向滚动条。详情请见[issue#15](https://qikaidesheng6.github.io//Kaipro.github.io/issues/15)
 
 ###### 其他历史版本个人觉得没有必要了解，看看英文就行了。
 
@@ -243,7 +243,7 @@ JavaScript 的压缩混淆、Less 的编译、Apache 2.0 许可通告的添加�
 #### Header Image
 
 标题底图是可以自己选的，看看几篇示例post你就知道如何设置了。在
-  [issue #6 ](https://github.com/Kaipro/Kaipro.github.io/issues/6) 中我被问到：怎么样才能让标题底图好看呢？
+  [issue #6 ](https://qikaidesheng6.github.io//Kaipro.github.io/issues/6) 中我被问到：怎么样才能让标题底图好看呢？
   
 标题底图的选取完全是看个人的审美了，我也帮不了你。每一篇文章可以有不同的底图，你想放什么就放什么，最后宽度要够，大小不要太大，否则加载慢啊。
 

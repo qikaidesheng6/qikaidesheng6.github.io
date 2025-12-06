@@ -46,11 +46,11 @@ Ports
 - [**Hexo**](https://github.com/Kaijun/hexo-theme-Kaiblog) by @kaijun
 - [**React-SSR**](https://github.com/LucasIcarus/Kaipro.github.io/tree/ssr) by @LucasIcarus
 
-[Starter/Boilerplate](https://github.com/Kaipro/Kaiblog-boilerplate)
+[Starter/Boilerplate](https://qikaidesheng6.github.io//Kaiblog-boilerplate)
 - Out of date. Helps wanted for updating it on par with the main repo
 
 Translation
-- [🇨🇳  中文文档（有点过时）](https://github.com/Kaipro/Kaipro.github.io/blob/master/_doc/README.zh.md)
+- [🇨🇳  中文文档（有点过时）](https://qikaidesheng6.github.io//Kaipro.github.io/blob/master/_doc/README.zh.md)
 
 
 License
