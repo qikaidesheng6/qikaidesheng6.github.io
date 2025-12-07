@@ -17,7 +17,21 @@
 <!-- Image to hack wechat -->
 <img src="/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
+<!-- 背景音乐 -->
+<audio id="bgm" loop autoplay muted preload="auto">
+  <source src="{{ '/assets/bg.mp3' | relative_url }}" type="audio/mpeg">
+  您的浏览器不支持音频标签。
+</audio>
 
+<script>
+  /* 用户第一次点击/触摸页面后再取消静音，避免浏览器拦截 */
+  document.addEventListener('click', function unmute() {
+    const a = document.getElementById('bgm');
+    a.muted = false;          // 真正开始出声
+    a.volume = 0.3;           // 音量 0~1
+    document.removeEventListener('click', unmute);
+  }, { once: true });
+</script>
 </body>
 
 </html>
