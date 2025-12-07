@@ -60,7 +60,30 @@
             });
         });
     </script>
+<!-- 👇 圆形切换按钮 -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
+    <button id="musicToggle" onclick="toggleMusic()" style="width: 50px; height: 50px; border: none; border-radius: 50%; background: #000; color: #fff; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;">播放</button>
+</div>
 
+<!-- 切换逻辑 + 状态同步监听（不变，仅样式修改） -->
+<script>
+function toggleMusic() {
+    const audio = document.getElementById('backgroundMusic');
+    audio.paused ? audio.play() : audio.pause();
+}
+
+// 实时同步按钮状态
+const audio = document.getElementById('backgroundMusic');
+const btn = document.getElementById('musicToggle');
+audio.addEventListener('play', () => {
+    btn.textContent = '暂停';
+    btn.style.background = '#666';
+});
+audio.addEventListener('pause', () => {
+    btn.textContent = '播放';
+    btn.style.background = '#000';
+});
+</script>
 <!-- Image to hack wechat -->
 <img src="/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
