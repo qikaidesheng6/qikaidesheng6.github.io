@@ -18,29 +18,35 @@
 <img src="/img/icon_wechat.png" width="0" height="0" />
 <!-- Migrate from head to bottom, no longer block render and still work -->
 
-<!-- 背景音乐 -->
-<audio id="bgm" loop autoplay preload="auto">
-  <source src="audio/zhdap.mp3" type="audio/mpeg">
-  您的浏览器不支持音频标签。
+<audio id="myAudio">
+    <source src="/audio/zhdap.mp3" type="audio/mpeg">
 </audio>
 
+<button id="playBtn" style="
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+">▶ 播放音乐</button>
+
 <script>
-(function(){
-  const a = document.getElementById('bgm');
-  if (!a) return;
-  
-  // 尝试直接播放
-  const playPromise = a.play();
-  if (playPromise !== undefined) {
-    playPromise.catch(error => {
-      // 自动播放失败时的处理
-      console.log('Auto-play prevented by browser policy:', error);
-    });
-  }
-  
-  // 设置音量
-  a.volume = 0.4;
-})();
+const audio = document.getElementById('myAudio');
+const playBtn = document.getElementById('playBtn');
+
+// 尝试自动播放（可能失败）
+audio.play().catch(() => {
+    console.log('自动播放被阻止，显示播放按钮');
+    playBtn.style.display = 'inline-block';
+});
+
+// 点击按钮播放
+playBtn.addEventListener('click', () => {
+    audio.play();
+    playBtn.textContent = '⏸️ 播放中...';
+});
 </script>
 </body>
 
