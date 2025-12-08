@@ -7,15 +7,25 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
+        /* 新增：背景图核心适配（保留原有背景图逻辑，叠加适配属性） */
         background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}');
+        background-position: top center; /* 背景图顶部对齐，避免截断 */
+        background-size: cover; /* 背景图铺满容器，不失真 */
+        background-repeat: no-repeat; /* 禁止背景图重复 */
+        /* 新增：自适应高度（替代固定高度，适配全屏） */
+        min-height: 60vh; /* 占视口高度60%，可根据需求调整为70vh/80vh */
+        padding-top: 80px; /* 避免内容贴导航栏，可微调 */
+        /* 保留原有背景色逻辑（优先级低于background-image） */
         background: {{ page.header-bg-css }};
     }
 
     {% if page.header-mask %}
     header.intro-header .header-mask{
         width: 100%;
-        height: 100%;
+        height: 100%; /* 遮罩层铺满整个头部容器 */
         position: absolute;
+        top: 0; /* 新增：确保遮罩层从顶部开始 */
+        left: 0; /* 新增：确保遮罩层从左侧开始 */
         background: rgba(0,0,0, {{ page.header-mask }});
     }
     {% endif %}
