@@ -11,7 +11,7 @@
 目前的物理活动范围主要在湖南,以后也许全国可飞。虚拟分身日常出没于[B站](https://space.bilibili.com/1211931503)、[Github](https://github.com/qikaidesheng6/qikaidesheng6.github.io)、[抖音](https://v.douyin.com/s8Qcag4_hmk/) 等
 <!--[微博](https://weibo.com/huxpro)、[知乎](https://www.zhihu.com/people/huxpro/pins/posts)、、[Instagram](https://www.instagram.com/huxpro/)、[推特](https://twitter.com/Huxpro/)、。-->
 
-我的博客是复刻[黄玄](https://huangxuan.me/)的.
+我的博客是复刻[黄玄的博客](https://huangxuan.me/)的.[黄玄的github](https://github.com/Huxpro/huxpro.github.io)，欢迎大家Star、Fork。
 以下是huangxuan的一些相关博客、演讲和媒体报道链接
 ##### 技术演讲
 
