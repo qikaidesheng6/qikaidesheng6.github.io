@@ -12,7 +12,7 @@
 <!--[微博](https://weibo.com/huxpro)、[知乎](https://www.zhihu.com/people/huxpro/pins/posts)、、[Instagram](https://www.instagram.com/huxpro/)、[推特](https://twitter.com/Huxpro/)、。-->
 
 我的博客是复刻[黄玄的博客](https://huangxuan.me/)的.[黄玄的github](https://github.com/Huxpro/huxpro.github.io)，欢迎大家Star、Fork。
-以下是huangxuan的一些相关博客、演讲和媒体报道链接
+以下是黄玄的一些相关博客、演讲和媒体报道链接
 ##### 技术演讲
 
 - [我的大前端世界观][20] · [FEDAY](https://fequan.com/2023/) · 2023
