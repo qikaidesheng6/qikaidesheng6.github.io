@@ -3,43 +3,75 @@ layout: page
 description: "「离开世界之前 一切都是过程」"
 ---
 
-{% for post in paginator.posts %}
-<div class="post-preview">
-    <a href="{{ post.url | prepend: site.baseurl }}">
-        <h2 class="post-title">
-            {{ post.title }}
-        </h2>
-        {% if post.subtitle %}
-        <h3 class="post-subtitle">
-            {{ post.subtitle }}
-        </h3>
-        {% endif %}
-        <div class="post-content-preview">
-            {% if post.lang == 'en' %}
-                {{ post.content | strip_html | truncate:300 }}
-            {% else %}
-                {{ post.content | strip_html | truncate:200 }}
+<!-- 第一步 - 筛选出作者为 KAI 的文章 -->
+{% assign my_posts = site.posts | where: "author", "KAI" %}
+<!-- 第二步 - 配置分页参数 -->
+{% assign paginate_size = site.paginate | default: 5 %}
+{% assign current_page = paginator.page | default: 1 %}
+{% assign total_my_posts = my_posts.size %}
+
+<!-- 第三步 - 计算分页的起始/结束索引 -->
+{% assign start_idx = current_page | minus: 1 | times: paginate_size %}
+{% assign end_idx = current_page | times: paginate_size | minus: 1 %}
+{% if end_idx >= total_my_posts %}
+  {% assign end_idx = total_my_posts | minus: 1 %}
+{% endif %}
+
+<!-- 循环筛选后的文章 -->
+{% for i in (start_idx..end_idx) %}
+  {% if i < total_my_posts %}
+    {% assign post = my_posts[i] %}
+    <div class="post-preview">
+        <a href="{{ post.url | prepend: site.baseurl }}">
+            <h2 class="post-title">
+                {{ post.title }}
+            </h2>
+            {% if post.subtitle %}
+            <h3 class="post-subtitle">
+                {{ post.subtitle }}
+            </h3>
             {% endif %}
-        </div>
-    </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
-    </p>
-</div>
-<hr>
+            <div class="post-content-preview">
+                {% if post.lang == 'en' %}
+                    {{ post.content | strip_html | truncate:300 }}
+                {% else %}
+                    {{ post.content | strip_html | truncate:200 }}
+                {% endif %}
+            </div>
+        </a>
+        <p class="post-meta">
+            Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
+        </p>
+    </div>
+    <hr>
+  {% endif %}
 {% endfor %}
 
-<!-- Pager -->
-{% if paginator.total_pages > 1 %}
+<!-- 分页导航（修正语法错误） -->
+{% assign remainder = total_my_posts | modulo: paginate_size %}
+{% assign total_pages = total_my_posts | divided_by: paginate_size %}
+{% if remainder > 0 %}
+  {% assign total_pages = total_pages | plus: 1 %}
+{% endif %}
+
+{% if total_pages > 1 %}
 <ul class="pager">
-    {% if paginator.previous_page %}
+    <!-- 上一页 -->
+    {% if current_page > 1 %}
     <li class="previous">
-        <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+        {% if current_page == 2 %}
+          <a href="{{ '/' | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
+        {% else %}
+          {% assign prev_page = current_page | minus: 1 %}
+          <a href="{{ site.baseurl }}/page{{ prev_page }}">&larr; Newer Posts</a>
+        {% endif %}
     </li>
     {% endif %}
-    {% if paginator.next_page %}
+    <!-- 下一页 -->
+    {% if current_page < total_pages %}
     <li class="next">
-        <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
+        {% assign next_page = current_page | plus: 1 %}
+        <a href="{{ site.baseurl }}/page{{ next_page }}">Older Posts &rarr;</a>
     </li>
     {% endif %}
 </ul>
