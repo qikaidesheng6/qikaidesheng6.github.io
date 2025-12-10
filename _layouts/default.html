@@ -13,75 +13,71 @@
 
     {% include footer.html %}
 
-    <!-- 音乐自动播放组件（路径改为 audio 文件夹） -->
-    <audio id="backgroundMusic" loop preload="auto">
-        <!-- 音频路径指向网站根目录下的 audio 文件夹 -->
-        <source src="/audio/zhdap.mp3" type="audio/mpeg">
-        <source src="/audio/zhdap.ogg" type="audio/ogg">
-        <source src="/audio/zhdap.wav" type="audio/wav">
-        <!-- 浏览器不支持 audio 标签时的降级提示 -->
-        您的浏览器不支持音频播放，请升级浏览器
-    </audio>
+<!-- 背景音乐组件（严格按需播放） -->
+<audio id="backgroundMusic" loop preload="auto">
+    <source src="/audio/zhdap.mp3" type="audio/mpeg">
+    <source src="/audio/zhdap.ogg" type="audio/ogg">
+    <source src="/audio/zhdap.wav" type="audio/wav">
+    您的浏览器不支持音频播放，请升级浏览器。
+</audio>
 
-    <!-- 自动播放脚本（处理浏览器限制） -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.getElementById('backgroundMusic');
-            // 可选：设置默认音量（0-1之间，避免音量过大）
-            audio.volume = 0.3; // 30% 音量，可根据需求调整
-
-            // 方法1：尝试直接自动播放（部分浏览器支持）
-            function playAudio() {
-                audio.play().catch(error => {
-                    console.log('直接自动播放失败，需要用户交互：', error);
-                    // 方法2：监听用户首次交互后播放（兼容大部分浏览器）
-                    document.addEventListener('click', initAudioPlay, { once: true });
-                    document.addEventListener('touchstart', initAudioPlay, { once: true });
-                });
-            }
-
-            // 用户交互后初始化播放
-            function initAudioPlay() {
-                audio.play().then(() => {
-                    console.log('音乐开始播放');
-                }).catch(error => {
-                    console.log('用户交互后播放失败：', error);
-                });
-            }
-
-            // 初始化播放
-            playAudio();
-
-            // 可选：页面可见性变化时处理播放状态
-            document.addEventListener('visibilitychange', function() {
-                if (document.visibilityState === 'visible' && audio.paused) {
-                    playAudio();
-                }
-            });
-        });
-    </script>
-<!-- 👇 圆形切换按钮 -->
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 999;">
-    <button id="musicToggle" onclick="toggleMusic()" style="width: 50px; height: 50px; border: none; border-radius: 50%; background: #000; color: #fff; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;">播放</button>
+<!-- 音乐控制按钮（固定在右下角） -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 9999;">
+    <button id="musicToggle" 
+            style="width: 50px; height: 50px; border: none; border-radius: 50%; 
+                   background: #000; color: #fff; cursor: pointer; font-size: 14px; 
+                   display: flex; align-items: center; justify-content: center;
+                   box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+        播放
+    </button>
 </div>
 
-<!-- 切换逻辑 + 状态同步监听（不变，仅样式修改） -->
 <script>
-function toggleMusic() {
+document.addEventListener('DOMContentLoaded', () => {
     const audio = document.getElementById('backgroundMusic');
-    audio.paused ? audio.play() : audio.pause();
-}
-
-// 实时同步按钮状态
-const audio = document.getElementById('backgroundMusic');
-const btn = document.getElementById('musicToggle');
-audio.addEventListener('play', () => {
-    btn.textContent = '暂停';
-    btn.style.background = '#666';
-});
-audio.addEventListener('pause', () => {
+    const btn = document.getElementById('musicToggle');
+    
+    // 设置默认音量
+    audio.volume = 0.3;
+    
+    // 初始状态：确保音乐暂停
+    audio.pause();
     btn.textContent = '播放';
     btn.style.background = '#000';
+    
+    // 按钮点击控制
+    btn.addEventListener('click', () => {
+        if (audio.paused) {
+            // 播放时重置进度（可选：移除此行可保留历史进度）
+            // audio.currentTime = 0;
+            
+            audio.play().then(() => {
+                btn.textContent = '暂停';
+                btn.style.background = '#666';
+            }).catch(err => {
+                console.warn('播放失败，请尝试再次点击:', err);
+            });
+        } else {
+            audio.pause();
+            btn.textContent = '播放';
+            btn.style.background = '#000';
+        }
+    });
+    
+    // 页面跳转前强制暂停（关键！）
+    window.addEventListener('beforeunload', () => {
+        audio.pause();
+        // 不保存任何状态 - 每次进入都是新开始
+    });
+    
+    // 额外保障：页面失去焦点时暂停
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState !== 'visible') {
+            audio.pause();
+            btn.textContent = '播放';
+            btn.style.background = '#000';
+        }
+    });
 });
 </script>
 <!-- Image to hack wechat -->
