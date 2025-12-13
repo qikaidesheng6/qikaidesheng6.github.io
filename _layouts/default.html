@@ -5,30 +5,35 @@
 
 <!-- 新增：图片自适应样式 -->
 <style>
-  /* 全局图片自适应 */
+  /* 全局 img 标签自适应（你已有的） */
   img {
-    max-width: 100%; /* 图片宽度不超过父容器 */
-    height: auto;    /* 高度自动，保持宽高比 */
-    box-sizing: border-box; /* 避免边框/内边距撑大图片 */
-  }
-
-  /* 针对文章内容里的图片优化（可选，更精准） */
-  .post-content img, 
-  .page-content img {
     max-width: 100%;
     height: auto;
-    margin: 1em auto; /* 图片上下间距 + 水平居中 */
-    display: block;   /* 消除图片底部默认空白 */
-    border-radius: 4px; /* 可选：图片圆角，美化 */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* 可选：轻微阴影，提升质感 */
+    box-sizing: border-box;
   }
-
-  /* 兼容小屏幕（手机） */
+  .post-content img, .page-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em auto;
+    display: block;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
   @media (max-width: 768px) {
     img {
-      max-width: 95%; /* 手机端留一点边距，不贴边 */
+      max-width: 95%;
     }
   }
+
+  /* 新增：头部 banner 背景图自适应（解决 About/Archive 差异） */
+/* 头部 banner 背景图自适应（优化版） */
+header.intro-header {
+  background-size: cover !important; /* 铺满容器，优先保证宽度 */
+  background-position: center center !important; /* 以图片中心为基准裁剪 */
+  background-repeat: no-repeat !important;
+  min-height: 60vh !important; /* 增加容器高度，减少裁剪 */
+  background-color: #000 !important; /* 空白处用黑色，和图片风格更协调 */
+}
 </style>
 
 <!-- hack iOS CSS :active style -->
