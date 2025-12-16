@@ -85,6 +85,164 @@ layout: default
 
 				{{ content }}
 
+<!-- 点赞功能开始 -->
+<div id="like-section" style="margin: 24px 0; text-align: center;">
+    <button id="like-btn" style="font-size: 18px; padding: 8px 24px; cursor: pointer;">👍 点赞 <span id="like-count">0</span></button>
+</div>
+
+<!-- 复用你已有的浮动文字样式（如果页面已存在可删除这部分） -->
+<style>
+/* 浮动文字特效样式 - 与你提供的完全一致 */
+.floating-text {
+    user-select: none;
+    cursor: default;
+    font-size: 20px;
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    white-space: nowrap;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    color: #fff;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: linear-gradient(135deg, rgba(76, 201, 240, 0.9), rgba(67, 97, 238, 0.9));
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.floating-text::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid rgba(67, 97, 238, 0.9);
+}
+
+/* 多种颜色选项 */
+.floating-text.color-1 { background: linear-gradient(135deg, rgba(76, 201, 240, 0.9), rgba(67, 97, 238, 0.9)); }
+.floating-text.color-2 { background: linear-gradient(135deg, rgba(240, 98, 146, 0.9), rgba(221, 46, 68, 0.9)); }
+.floating-text.color-3 { background: linear-gradient(135deg, rgba(109, 213, 250, 0.9), rgba(38, 198, 218, 0.9)); }
+.floating-text.color-4 { background: linear-gradient(135deg, rgba(106, 255, 181, 0.9), rgba(0, 184, 148, 0.9)); }
+.floating-text.color-5 { background: linear-gradient(135deg, rgba(255, 159, 67, 0.9), rgba(255, 107, 107, 0.9)); }
+
+.floating-text.color-1::after { border-top-color: rgba(67, 97, 238, 0.9); }
+.floating-text.color-2::after { border-top-color: rgba(221, 46, 68, 0.9); }
+.floating-text.color-3::after { border-top-color: rgba(38, 198, 218, 0.9); }
+.floating-text.color-4::after { border-top-color: rgba(0, 184, 148, 0.9); }
+.floating-text.color-5::after { border-top-color: rgba(255, 107, 107, 0.9); }
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .floating-text {
+        font-size: 16px;
+        white-space: normal;
+        max-width: 200px;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+// ========== 原有点赞计数逻辑（完全未改） ==========
+// 获取当前页面唯一标识（如URL或自定义ID）
+var likeKey = 'like_count_' + window.location.pathname;
+// 初始化点赞数
+function getLikeCount() {
+    var count = localStorage.getItem(likeKey);
+    return count ? parseInt(count) : 0;
+}
+function setLikeCount(count) {
+    localStorage.setItem(likeKey, count);
+}
+// 更新页面显示
+function updateLikeDisplay() {
+    document.getElementById('like-count').textContent = getLikeCount();
+}
+
+// ========== 复用浮动文字样式的点赞提示动画 ==========
+// 颜色类别数组（和你提供的一致）
+const colorClasses = ['color-1', 'color-2', 'color-3', 'color-4', 'color-5'];
+
+// 点赞提示动画函数（复用floating-text样式）
+function showLikeTip() {
+    // 获取点赞按钮的位置（让提示从按钮位置弹出）
+    const btn = document.getElementById('like-btn');
+    const btnRect = btn.getBoundingClientRect();
+    // 按钮中心坐标（也可以用点击位置：event.clientX/event.clientY）
+    const x = btnRect.left + btnRect.width / 2;
+    const y = btnRect.top - 20; // 按钮上方20px开始
+    
+    // 创建提示元素（复用floating-text类）
+    const tip = document.createElement("span");
+    tip.className = "floating-text";
+    
+    // 随机选择颜色（和你提供的逻辑一致）
+    const colorClass = colorClasses[Math.floor(Math.random() * colorClasses.length)];
+    tip.classList.add(colorClass);
+    
+    // 设置位置和文字（固定为“谢谢你的点赞”）
+    tip.style.left = x + "px";
+    tip.style.top = y + "px";
+    tip.textContent = '谢谢你的点赞 ❤️';
+    
+    // 随机旋转角度（-5° 到 5°，和你提供的逻辑一致）
+    const rotation = Math.floor(Math.random() * 11) - 5;
+    tip.style.transform = `translate(-50%, 0) rotate(${rotation}deg)`;
+    
+    // 添加到页面
+    document.body.appendChild(tip);
+    
+    // 触发动画（上飘+淡入，和你提供的逻辑一致）
+    setTimeout(() => {
+        tip.style.opacity = "1";
+        tip.style.transform = `translate(-50%, -100px) rotate(${rotation}deg)`;
+    }, 10);
+    
+    // 动画结束后移除元素（和你提供的逻辑一致）
+    setTimeout(() => {
+        tip.style.opacity = "0";
+        tip.style.transform = `translate(-50%, -230px) rotate(${rotation}deg)`;
+        
+        setTimeout(() => {
+            if (tip.parentNode) {
+                tip.parentNode.removeChild(tip);
+            }
+        }, 1000);
+    }, 2000);
+}
+
+// ========== 点赞点击事件（仅新增调用动画） ==========
+document.getElementById('like-btn').addEventListener('click', function() {
+    var count = getLikeCount() + 1;
+    setLikeCount(count);
+    updateLikeDisplay();
+    // 调用点赞提示动画（复用floating-text样式）
+    showLikeTip();
+});
+
+// 页面加载时初始化显示
+updateLikeDisplay();
+
+                
+                    /*
+                    // 以下为点赞数据存储到后端的伪代码（需后端支持），仅供参考：
+                    // fetch('/api/like', {
+                    //     method: 'POST',
+                    //     body: JSON.stringify({ post: window.location.pathname }),
+                    //     headers: { 'Content-Type': 'application/json' }
+                    // }).then(res => res.json()).then(data => {
+                    //     document.getElementById('like-count').textContent = data.count;
+                    // });
+                    */
+                    </script>
+                    <!-- 点赞功能结束 -->
                        
 <style>
 /* 浮动文字特效样式 - 添加到现有CSS中 */
