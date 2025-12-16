@@ -75,7 +75,7 @@ ba_track_id: "d2a1bfd12d1994564707c1e8df5c185a" # your baidu analytics track id
 # Sidebar settings
 sidebar: true # whether or not using Sidebar.
 sidebar-about-description: "要做一个有理想、敢担当，能吃苦、肯奋斗的新时代青年"
-sidebar-avatar: https://github.com/qikaidesheng6.png # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: https://qikaidesheng666.oss-cn-hongkong.aliyuncs.com/qqavatar.jpg # use absolute URL, seeing it's used in both `/` and `/about/`
 
 # Featured Tags
 featured-tags: true # whether or not using Feature-Tags
