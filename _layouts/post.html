@@ -9,6 +9,16 @@ layout: default
 <!-- Post Header -->
 {% include intro-header.html type='post' %}
 
+<style>
+  /* 临时调试：确保post的header背景白 */
+  header.intro-header {
+      background-color: #ffffff !important;
+      background-image: none !important;
+  }
+  header.intro-header .header-mask {
+      display: none !important;
+  }
+</style>
 <!-- 👇 核心：滚动文字（自动出现在Banner图和文章正文之间） -->
 <div class="scroll-text-container">
   <div class="scroll-text">
