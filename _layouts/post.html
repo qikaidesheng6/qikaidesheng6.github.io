@@ -219,12 +219,34 @@ function showLikeTip() {
 }
 
 // ========== 点赞点击事件（仅新增调用动画） ==========
-document.getElementById('like-btn').addEventListener('click', function() {
+
+// 防止移动端 touchend 和 click 双触发
+let likeBtnLocked = false;
+const likeBtn = document.getElementById('like-btn');
+function handleLike() {
+    if (likeBtnLocked) return;
+    likeBtnLocked = true;
+    setTimeout(() => { likeBtnLocked = false; }, 300); // 300ms 内只允许一次
     var count = getLikeCount() + 1;
     setLikeCount(count);
     updateLikeDisplay();
-    // 调用点赞提示动画（复用floating-text样式）
     showLikeTip();
+}
+
+// 只绑定一次事件，移动端优先 touchend，PC 端用 click
+let isTouch = false;
+likeBtn.addEventListener('touchend', function(e) {
+    isTouch = true;
+    handleLike();
+    e.preventDefault(); // 阻止后续 click
+}, { passive: false });
+likeBtn.addEventListener('click', function(e) {
+    if (isTouch) {
+        // 移动端已触发 touchend，不再触发 click
+        isTouch = false;
+        return;
+    }
+    handleLike();
 });
 
 // 页面加载时初始化显示
