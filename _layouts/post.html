@@ -234,10 +234,31 @@ function handleLike() {
 }
 
 // 只绑定一次事件，移动端优先 touchend，PC 端用 click
+
+// 防止滑动触发浮出文本
 let isTouch = false;
+let touchMoved = false;
+let touchStartY = 0;
+likeBtn.addEventListener('touchstart', function(e) {
+    touchMoved = false;
+    touchStartY = e.touches[0].clientY;
+});
+likeBtn.addEventListener('touchmove', function(e) {
+直接在我的代码里面更改吧
+
+已编辑
+post.html+16-1
+
+
+    if (Math.abs(e.touches[0].clientY - touchStartY) > 10) {
+        touchMoved = true;
+    }
+});
 likeBtn.addEventListener('touchend', function(e) {
     isTouch = true;
-    handleLike();
+    if (!touchMoved) {
+        handleLike();
+    }
     e.preventDefault(); // 阻止后续 click
 }, { passive: false });
 likeBtn.addEventListener('click', function(e) {
