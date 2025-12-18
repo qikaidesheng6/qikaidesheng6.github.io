@@ -7,16 +7,18 @@
 <style type="text/css">
     header.intro-header{
         position: relative;
-        /* 新增：背景图核心适配（保留原有背景图逻辑，叠加适配属性） */
-        background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}');
+        /* 核心修改：区分绝对链接/本地路径，不再强制加 / */
+        background-image: url('{% assign img_path = page.header-img | default: site.header-img %}{% if img_path contains "http" %}{{ img_path }}{% else %}{{ site.baseurl }}/{{ img_path }}{% endif %}');
         background-position: top center; /* 背景图顶部对齐，避免截断 */
         background-size: cover; /* 背景图铺满容器，不失真 */
         background-repeat: no-repeat; /* 禁止背景图重复 */
         /* 新增：自适应高度（替代固定高度，适配全屏） */
         min-height: 60vh; /* 占视口高度60%，可根据需求调整为70vh/80vh */
         padding-top: 80px; /* 避免内容贴导航栏，可微调 */
-        /* 保留原有背景色逻辑（优先级低于background-image） */
+        /* 保留原有背景色逻辑（调整优先级，不覆盖背景图） */
         background: {{ page.header-bg-css }};
+        /* 强制背景图优先级高于背景色 */
+        background-image: url('{% assign img_path = page.header-img | default: site.header-img %}{% if img_path contains "http" %}{{ img_path }}{% else %}{{ site.baseurl }}/{{ img_path }}{% endif %}') !important;
     }
 
     {% if page.header-mask %}
@@ -104,7 +106,8 @@
 {% endif %}
 
 {% if include.type == 'page' %}
-<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
+<!-- 核心修改：page类型的header不再重复拼接路径，复用上面的style逻辑 -->
+<header class="intro-header">
   <div class="header-mask"></div>
   <div class="container">
     <div class="row">
